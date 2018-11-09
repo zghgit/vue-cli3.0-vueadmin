@@ -1,7 +1,12 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
+import {
+    Message,
+    MessageBox
+} from 'element-ui'
 import store from '../store'
-import { getToken } from '@/utils/auth'
+import {
+    getToken
+} from '@/utils/auth'
 
 // 创建axios实例
 // var BASE_API = '';
@@ -12,7 +17,8 @@ import { getToken } from '@/utils/auth'
 // }
 
 const service = axios.create({
-    baseURL: "http://193.112.153.155:3001", // api的base_url
+    // baseURL: "http://193.112.153.155:3001", // api的base_url
+    baseURL: "http://localhost:3001",
     timeout: 5000 // 请求超时时间
 })
 
@@ -35,8 +41,8 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
     response => {
         /**
-        * code为非20000是抛错 可结合自己业务进行修改
-        */
+         * code为非20000是抛错 可结合自己业务进行修改
+         */
         const res = response.data
         if (res.code !== 1) {
             Message({
@@ -53,7 +59,7 @@ service.interceptors.response.use(
                     type: 'warning'
                 }).then(() => {
                     store.dispatch('FedLogOut').then(() => {
-                        location.reload()// 为了重新实例化vue-router对象 避免bug
+                        location.reload() // 为了重新实例化vue-router对象 避免bug
                     })
                 })
             }
@@ -63,7 +69,7 @@ service.interceptors.response.use(
         }
     },
     error => {
-        console.log('err' + error)// for debug
+        console.log('err' + error) // for debug
         Message({
             message: error.message,
             type: 'error',

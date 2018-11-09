@@ -1,4 +1,5 @@
 <template>
+<!-- 菜单 -->
   <div v-if="!item.hidden&&item.children" class="menu-wrapper">
 
       <router-link v-if="hasOneShowingChild(item.children) && !onlyOneChild.children&&!item.alwaysShow" :to="resolvePath(onlyOneChild.path)">
@@ -42,53 +43,53 @@
 import path from "path";
 
 export default {
-    name: "SidebarItem",
-    props: {
-        // route配置json
-        item: {
-            type: Object,
-            required: true
-        },
-        isNest: {
-            type: Boolean,
-            default: false
-        },
-        basePath: {
-            type: String,
-            default: ""
-        }
+  name: "SidebarItem",
+  props: {
+    // route配置json
+    item: {
+      type: Object,
+      required: true
     },
-    data() {
-        return {
-            onlyOneChild: null
-        };
+    isNest: {
+      type: Boolean,
+      default: false
     },
-    methods: {
-        hasOneShowingChild(children) {
-            const showingChildren = children.filter(item => {
-                if (item.hidden) {
-                    return false;
-                } else {
-                    // temp set(will be used if only has one showing child )
-                    this.onlyOneChild = item;
-                    return true;
-                }
-            });
-            if (showingChildren.length === 1) {
-                return true;
-            }
-            return false;
-        },
-        resolvePath(...paths) {
-            return path.resolve(this.basePath, ...paths);
-        }
+    basePath: {
+      type: String,
+      default: ""
     }
+  },
+  data() {
+    return {
+      onlyOneChild: null
+    };
+  },
+  methods: {
+    hasOneShowingChild(children) {
+      const showingChildren = children.filter(item => {
+        if (item.hidden) {
+          return false;
+        } else {
+          // temp set(will be used if only has one showing child )
+          this.onlyOneChild = item;
+          return true;
+        }
+      });
+      if (showingChildren.length === 1) {
+        return true;
+      }
+      return false;
+    },
+    resolvePath(...paths) {
+      return path.resolve(this.basePath, ...paths);
+    }
+  }
 };
 </script>
 
 <style scoped>
-.fontcontainer{
-    padding-right:10px;
+.fontcontainer {
+  padding-right: 10px;
 }
 </style>
 
